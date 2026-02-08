@@ -1,20 +1,19 @@
-package com.example.ai_assistant
+package com.example.ai_assistant.Chat
 
-import com.example.ai_assistant.myui.ChatMessage
-import com.example.ai_assistant.myui.Role
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.ai_assistant.NetworkModule
 import com.example.ai_assistant.AskRequest
+import com.example.ai_assistant.NetworkModule
 import kotlinx.coroutines.launch
 
 class ChatViewModel : ViewModel() {
 
     val messages = mutableStateListOf<ChatMessage>()
+
     var inputText by mutableStateOf("")
         private set
 
@@ -39,16 +38,17 @@ class ChatViewModel : ViewModel() {
                     )
                 )
 
-                // Если response.sources — это List<String>, просто используем как есть
+                // Если response.sources — это List<String>
                 val sourcesList: List<String> = (response.sources ?: emptyList()).map { it.toString() }
 
-
                 // Ответ ассистента
-                messages.add(ChatMessage(
-                    text = response.answer,
-                    role = Role.ASSISTANT,
-                    sources = sourcesList
-                ))
+                messages.add(
+                    ChatMessage(
+                        text = response.answer,
+                        role = Role.ASSISTANT,
+                        sources = sourcesList
+                    )
+                )
 
             } catch (e: Exception) {
                 messages.add(ChatMessage("Ошибка: ${e.message}", Role.ASSISTANT))

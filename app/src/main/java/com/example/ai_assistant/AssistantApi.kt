@@ -1,32 +1,37 @@
 package com.example.ai_assistant
 
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
+import com.example.ai_assistant.Actions.ActionsResponse
+import com.example.ai_assistant.Actions.CreateActionRequest
+import com.example.ai_assistant.Actions.CreateActionResponse
+import com.example.ai_assistant.Documents.DocumentsResponse
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
-
-//interface AssistantApi {
-//    @POST("/ask")  // метод POST, путь /ask как в твоем Python FastAPI
-//    suspend fun ask(@Body request: AskRequest): AskResponse
-//}
-
-data class AskRequest(
-    val question: String,
-    val session_id: String
-)
-data class AskResponse(
-    val answer: String,
-    val sources: List<Any>,
-    val no_exact_match: Boolean
-)
+import retrofit2.http.Query
 
 interface AssistantApi {
+
     @POST("api/ask")
     suspend fun ask(
         @Body request: AskRequest
     ): AskResponse
+
+    @GET("api/documents")
+    suspend fun getDocuments(
+        @Query("q") query: String?,
+        @Query("process") process: String?,
+        @Query("forms_only") formsOnly: Int = 0
+    ): DocumentsResponse
+
+    @POST("api/actions")
+    suspend fun createAction(
+        @Body request: CreateActionRequest
+    ): CreateActionResponse
+
+    @GET("api/actions")
+    suspend fun getActions(
+        @Query("limit") limit: Int = 20
+    ): ActionsResponse
 }
 
 

@@ -1,6 +1,4 @@
-package com.example.ai_assistant.myui
-
-import com.example.ai_assistant.Source
+package com.example.ai_assistant.Chat
 
 enum class Role { USER, ASSISTANT }
 

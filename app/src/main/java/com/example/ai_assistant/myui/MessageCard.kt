@@ -10,8 +10,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.ai_assistant.myui.ChatMessage
-import com.example.ai_assistant.myui.Role
+import com.example.ai_assistant.Chat.ChatMessage
+import com.example.ai_assistant.Chat.Role
 import com.example.ai_assistant.ui.theme.AssistantBg
 import com.example.ai_assistant.ui.theme.SubtleColor
 import com.example.ai_assistant.ui.theme.UserBg
