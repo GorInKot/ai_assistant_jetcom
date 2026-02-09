@@ -19,3 +19,5 @@ val AccentSoftColor = Color(0xFFE7F5F0)
 val BorderColor = Color(0xFFD6DDE3)
 val UserBg = Color(0xFFF3F6FF)
 val AssistantBg = Color(0xFFFFFFFF)
+
+val ColorSurf = Color(0xFFFFC107)
