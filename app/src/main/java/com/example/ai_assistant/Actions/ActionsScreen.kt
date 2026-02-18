@@ -13,8 +13,6 @@ import com.example.ai_assistant.myui.Actions.Action
 import com.example.ai_assistant.ui.theme.AccentColor
 import com.example.ai_assistant.ui.theme.Panel
 import com.example.ai_assistant.ui.theme.SubtleColor
-import java.text.SimpleDateFormat
-import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -112,6 +110,8 @@ fun ActionsScreen(viewModel: ActionsViewModel = viewModel()) {
         }
 
         Spacer(Modifier.height(16.dp))
+
+        Text("Последние действия", style = MaterialTheme.typography.titleMedium)
 
         // 🔹 Список существующих действий
         if (viewModel.actions.isEmpty()) {

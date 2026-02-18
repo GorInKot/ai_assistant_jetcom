@@ -10,3 +10,4 @@ data class DocumentDto(
     val url: String?,
     val download_url: String?
 )
+
