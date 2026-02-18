@@ -47,6 +47,7 @@ kotlin {
 }
 
 dependencies {
+
     implementation("androidx.compose.material:material-icons-core:1.7.8")
     implementation("androidx.compose.material:material-icons-extended:1.7.8")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.10.0")

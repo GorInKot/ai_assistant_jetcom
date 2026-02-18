@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.ai_assistant.Documents.DocumentsScreen
 import com.example.ai_assistant.Actions.ActionsScreen
+import com.example.ai_assistant.myui.Documents.DocumentsView
 import com.example.ai_assistant.ui.chat.ChatScreen
 
 @Composable
@@ -24,7 +25,8 @@ fun AppNavHost(
             ChatScreen()
         }
         composable(Screen.Documents.route) {
-            DocumentsScreen()
+//            DocumentsScreen()
+            DocumentsView()
         }
         composable(Screen.Actions.route) {
             ActionsScreen()

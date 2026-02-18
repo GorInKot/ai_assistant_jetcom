@@ -17,21 +17,17 @@ class DocumentsViewModel : ViewModel() {
     var searchQuery by mutableStateOf("")
         private set
 
-    var selectedProcess by mutableStateOf("")
+    var selectedProcess by mutableStateOf(ProcessFilter.ALL)
         private set
 
     var isLoading by mutableStateOf(false)
         private set
 
-    fun updateSearchQuery(value: String) {
-        searchQuery = value
-    }
+    fun updateSearchQuery(value: String) { searchQuery = value }
 
-    fun updateProcess(value: String) {
-        selectedProcess = value
-    }
+    fun updateProcess(filter: ProcessFilter) { selectedProcess = filter }
 
-    fun loadDocuments() {
+    fun loadDocuments(formsOnly: Boolean = false) {
         viewModelScope.launch {
             isLoading = true
             documents.clear()
@@ -39,32 +35,33 @@ class DocumentsViewModel : ViewModel() {
             try {
                 val response = NetworkModule.api.getDocuments(
                     query = searchQuery.ifBlank { null },
-                    process = selectedProcess.ifBlank { null }
+                    process = if (selectedProcess == ProcessFilter.ALL) null else selectedProcess.label
                 )
 
                 response.documents.forEach { raw ->
-                    documents.add(
-                        Document(
-                            fileName = raw.file_name ?: "Документ",
-                            process = raw.process ?: "",
-                            path = raw.relative_path ?: "",
-                            isForm = raw.is_form == true,
-                            searchable = raw.searchable == true,
-                            url = raw.url ?: "",
-                            downloadUrl = raw.download_url ?: ""
-                        )
+                    val doc = Document(
+                        fileName = raw.file_name ?: "Документ",
+                        process = raw.process ?: "",
+                        path = raw.relative_path ?: "",
+                        isForm = raw.is_form == true,
+                        searchable = raw.searchable == true,
+                        url = raw.url ?: "",
+                        downloadUrl = raw.download_url ?: ""
                     )
-                }
 
-            } catch (_: Exception) {
-                // при желании: лог / snackbar
-            } finally {
-                isLoading = false
-            }
+                    if (!formsOnly || doc.isForm) documents.add(doc)
+                }
+            } catch (_: Exception) { }
+            finally { isLoading = false }
         }
     }
 
-    init {
-        loadDocuments()
+    enum class ProcessFilter(val label: String) {
+        ALL("Все процессы"),
+        ZUS("ЦУС"),
+        EKT("ЕКТП"),
+        MED("Медосмотр")
     }
+
+    init { loadDocuments() }
 }

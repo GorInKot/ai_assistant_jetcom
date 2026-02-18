@@ -35,21 +35,65 @@ fun DocumentItem(doc: Document) {
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(containerColor = Panel)
     ) {
-        Column(modifier = Modifier.padding(12.dp)) {
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text(doc.fileName)
-                if (doc.isForm) {
-                    Text("Форма", color = AccentColor, modifier = Modifier.background(AccentSoftColor, RoundedCornerShape(50)).padding(2.dp, 0.dp))
-                }
-                Text(if (doc.searchable) "Текст доступен" else "Без извлечения текста", color = SubtleColor)
+        Column(
+            modifier = Modifier.padding(12.dp),
+            verticalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
+
+            // Название документа
+            Text(
+                text = doc.fileName
+            )
+
+            // Форма (если есть)
+            if (doc.isForm) {
+                Text(
+                    text = "Форма",
+                    color = AccentColor,
+                    modifier = Modifier
+                        .background(
+                            AccentSoftColor,
+                            RoundedCornerShape(50)
+                        )
+                        .padding(horizontal = 8.dp, vertical = 2.dp)
+                )
             }
 
-            Text("${doc.path} | ${doc.process}", color = SubtleColor, modifier = Modifier.padding(top = 4.dp))
+            // Статус текста
+            Text(
+                text = if (doc.searchable)
+                    "Текст доступен"
+                else
+                    "Без извлечения текста",
+                color = SubtleColor
+            )
 
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(top = 4.dp)) {
-                Button(onClick = { uriHandler.openUri(doc.url) }) { Text("Открыть") }
-                Button(onClick = { uriHandler.openUri(doc.downloadUrl) }) { Text("Скачать") }
+            // Путь + процесс
+            Text(
+                text = "${doc.path} | ${doc.process}",
+                color = SubtleColor,
+                modifier = Modifier.padding(top = 4.dp)
+            )
+
+            // Кнопки
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier.padding(top = 6.dp)
+            ) {
+                Button(
+                    onClick = { uriHandler.openUri(doc.url) }
+                ) {
+                    Text("Открыть")
+                }
+
+                Button(
+                    onClick = { uriHandler.openUri(doc.downloadUrl) }
+                ) {
+                    Text("Скачать")
+                }
             }
         }
     }
 }
+
+
